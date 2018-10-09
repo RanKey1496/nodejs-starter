@@ -1,7 +1,10 @@
 const Types = {
 
     Controller: Symbol('Controller'),
-    Response: Symbol('Response')
+
+    VehicleRepository: Symbol('VehicleRepository'),
+
+    VehicleService: Symbol('VehicleService')
 
 };
 
