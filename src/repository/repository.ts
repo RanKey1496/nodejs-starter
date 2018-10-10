@@ -1,5 +1,5 @@
 import { Repository as typeRepository } from 'typeorm';
-import { unmanaged } from 'inversify';
+import { unmanaged, injectable } from 'inversify';
 
 export type Query<T> = {
     [P in keyof T]?: T[P] | { $regex: RegExp };
@@ -15,6 +15,7 @@ export interface Repository<T> {
     delete(id: string): Promise<boolean>;
 }
 
+@injectable()
 export abstract class GenericRepositoryImp<TEntity> implements Repository<TEntity> {
 
     private readonly repository: typeRepository<TEntity>;
@@ -39,8 +40,8 @@ export abstract class GenericRepositoryImp<TEntity> implements Repository<TEntit
         return await this.repository.find(query);
     }
 
-    public async update(id: string, item: any): Promise<boolean> {
-        const result = await this.repository.update(id, item);
+    public async update(id: string, data: any): Promise<boolean> {
+        const result = await this.repository.update(id, data);
         return !!result;
     }
 

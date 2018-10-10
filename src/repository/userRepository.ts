@@ -1,12 +1,12 @@
 import { injectable } from 'inversify';
 import { GenericRepositoryImp } from './repository';
-import { Vehicle } from '../entity/vehicle';
 import { getRepository } from 'typeorm';
+import { User } from '../entity/user';
 
 @injectable()
-export class VehicleRepository extends GenericRepositoryImp<Vehicle> {
+export class UserRepository extends GenericRepositoryImp<User> {
 
     constructor() {
-        super(getRepository(Vehicle));
+        super(getRepository(User));
     }
 }

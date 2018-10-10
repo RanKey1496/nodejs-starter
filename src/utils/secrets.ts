@@ -11,7 +11,7 @@ function getEnvironment(path: string, env: string) {
     }
 }
 
-const ENVIRONMENT = process.env.NODE_ENV;
+export const ENVIRONMENT = process.env.NODE_ENV;
 
 if (ENVIRONMENT === 'production') {
     getEnvironment('.env', ENVIRONMENT);
@@ -22,6 +22,16 @@ if (ENVIRONMENT === 'production') {
         getEnvironment('.env.dev', 'development');
     }
 }
+
+/**
+ * Database connection
+ */
+export const DB_NAME = process.env.DB_NAME;
+export const DB_HOST = process.env.DB_HOST;
+export const DB_PORT = Number(process.env.DB_PORT);
+export const DB_USER = process.env.DB_USER;
+export const DB_PASSWORD = process.env.DB_PASSWORD;
+export const DB_LOGGING = process.env.DB_LOGGING === 'true';
 
 /**
  * Winston logger

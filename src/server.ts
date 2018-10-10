@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import App from './app';
-import { logger } from './utils/logger';
 
 console.info(`
 888     888          888      d8b          888               .d8888b.                            d8b
@@ -14,11 +13,21 @@ Y88b   d88P  .d88b.  88888b.  888  .d8888b 888  .d88b.       "Y888b.    .d88b.  
 `);
 
 process.on('uncaughtException', (err) => {
-    logger.error('Unhandled Exception ', err.message);
+    console.error(`
+    --------------------
+    Unhandled Exception:
+    ${err.message}
+    --------------------
+    `);
 });
 
 process.on('unhandledRejection', (err) => {
-    logger.error('Unhandled Rejection ', err.message);
+    console.error(`
+    --------------------
+    Unhandled Rejection:
+    ${err.message}
+    --------------------
+    `);
 });
 
 const app: App = new App();

@@ -3,8 +3,10 @@ const Types = {
     Controller: Symbol('Controller'),
 
     VehicleRepository: Symbol('VehicleRepository'),
+    UserRepository: Symbol('UserRepository'),
 
-    VehicleService: Symbol('VehicleService')
+    VehicleService: Symbol('VehicleService'),
+    UserService: Symbol('UserService')
 
 };
 
