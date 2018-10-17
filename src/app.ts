@@ -18,7 +18,7 @@ import { ENVIRONMENT } from './utils/secrets';
 
 export default class App {
 
-    public async init() {
+    private async init() {
 
         await createConnection(dbOptions);
 
