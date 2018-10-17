@@ -25,6 +25,7 @@ jobs:
       - image: circleci/node:8.9.4
     working_directory: ~/service
     steps:
+      - checkout
       - restore_cache:
           keys:
             - dependencies-cache-{{ checksum "package.json" }}
@@ -37,6 +38,7 @@ jobs:
       - image: circleci/node:8.9.4
     working_directory: ~/service
     steps:
+      - checkout
       - restore_cache:
           keys: 
             - dist-cache-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
