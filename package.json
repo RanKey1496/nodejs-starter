@@ -17,7 +17,6 @@
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
   },
   "dependencies": {
-    "@types/mocha": "^5.2.5",
     "body-parser": "^1.18.3",
     "compression": "^1.7.3",
     "cors": "^2.8.4",
@@ -49,7 +48,6 @@
     "chai": "^4.2.0",
     "concurrently": "^4.0.1",
     "jest": "^23.6.0",
-    "mocha": "^5.2.0",
     "nodemon": "^1.18.4",
     "ts-jest": "^23.10.4",
     "ts-mockito": "^2.3.1",

@@ -17,10 +17,14 @@
         "types": [
             "reflect-metadata"
         ],
+        "typeRoots": [
+            "node_modules/@types"
+        ],
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
     },
     "include": [
-        "src/**/*"
+        "src/**/*",
+        "node_modules/@types"
     ]
 }
