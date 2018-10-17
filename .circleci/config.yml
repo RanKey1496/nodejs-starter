@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: /home/nodejs-started
+    working_directory: ~/nodejs-started
     docker:
       - image: circleci/node:6.10
     steps:
