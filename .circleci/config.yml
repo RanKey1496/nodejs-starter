@@ -1,0 +1,25 @@
+version: 2
+jobs:
+  build:
+    working_directory: /home/nodejs-started
+    docker:
+      - image: circleci/node:6.10
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependencies-cache-{{ checksum "package.json" }}
+            - dependencies-cache
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Run test
+          command: npm test
+      - run:
+          name: Deploy application
+          command: sls deploy -v
+      - save_cache:
+          paths:
+            - node_modules
+          key: dependencies-cache-{{ checksum "package.json" }}
