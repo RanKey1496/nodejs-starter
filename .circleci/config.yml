@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  dependencies:
+  test:
     docker:
       - image: circleci/node:8.9.4
     working_directory: ~/service
@@ -16,23 +16,13 @@ jobs:
       - run:
           name: Install dependencies
           command: npm install
+      - run:
+          name: Run test
+          command: npm test
       - save_cache:
           paths:
             - node_modules
           key: dependencies-cache-{{ checksum "package.json" }}
-  test:
-    docker:
-      - image: circleci/node:8.9.4
-    working_directory: ~/service
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - dependencies-cache-{{ checksum "package.json" }}
-            - dependencies-cache
-      - run:
-          name: Run test
-          command: npm test
   build:
     docker:
       - image: circleci/node:8.9.4
@@ -63,10 +53,7 @@ workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - dependencies
-      - test:
-          requires:
-            - dependencies
+      - test
       - build:
           requires:
             - test
