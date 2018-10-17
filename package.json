@@ -1,6 +1,6 @@
 {
   "name": "nodejs-started",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "start": "npm run serve",
     "build": "npm run build-ts && npm run tslint",
