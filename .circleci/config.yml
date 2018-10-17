@@ -1,11 +1,14 @@
 version: 2
 jobs:
-  build:
-    working_directory: ~/nodejs-started
+  dependencies:
     docker:
-      - image: circleci/node:6.10
+      - image: circleci/node:8.9.4
+    working_directory: ~/service
     steps:
       - checkout
+      - run:
+          name: Current branch
+          command: echo ${CIRCLE_BRANCH}
       - restore_cache:
           keys:
             - dependencies-cache-{{ checksum "package.json" }}
@@ -13,13 +16,62 @@ jobs:
       - run:
           name: Install dependencies
           command: npm install
-      - run:
-          name: Run test
-          command: npm test
-      - run:
-          name: Deploy application
-          command: sls deploy -v
       - save_cache:
           paths:
             - node_modules
           key: dependencies-cache-{{ checksum "package.json" }}
+  test:
+    docker:
+      - image: circleci/node:8.9.4
+    working_directory: ~/service
+    steps:
+      - restore_cache:
+          keys:
+            - dependencies-cache-{{ checksum "package.json" }}
+            - dependencies-cache
+      - run:
+          name: Run test
+          command: npm test
+  build:
+    docker:
+      - image: circleci/node:8.9.4
+    working_directory: ~/service
+    steps:
+      - restore_cache:
+          keys: 
+            - dist-cache-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+            - dependencies-cache-{{ checksum "package.json" }}
+            - dependencies-cache
+      - run:
+          name: Build files
+          command: npm run build
+      - save_cache:
+          key: dist-cache-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - dist
+  deploy:
+    steps:
+      - run:
+          name: Deploy over SSH
+          command: echo "Deploying xd"
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - dependencies
+      - test:
+          requires:
+            - dependencies
+      - build
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
