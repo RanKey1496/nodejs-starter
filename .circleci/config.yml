@@ -63,7 +63,7 @@ workflows:
       - test:
           requires:
             - dependencies
-      - build
+      - build:
           requires:
             - test
           filters:
