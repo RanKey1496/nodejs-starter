@@ -50,6 +50,8 @@ jobs:
           paths:
             - dist
   deploy:
+    machine:
+      enabled: true
     steps:
       - run:
           name: Deploy over SSH
