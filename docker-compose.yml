@@ -1,0 +1,10 @@
+version: '3'
+service:
+  started:
+    build: .
+    ports:
+      - 3500
+    deploy:
+      labels:
+        - "traefik.backend=started"
+        - "traefik.frontend.rule=Host:started.devcrew.com.co"
