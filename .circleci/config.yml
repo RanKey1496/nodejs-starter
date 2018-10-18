@@ -56,13 +56,13 @@ jobs:
           command: ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
       - run:
           name: Remove existing files
-          command: ssh $SSH_USER@SSH_HOST "mkdir -p ~/services; rm -rf ~/services/${SERVICE}"
+          command: ssh $SSH_USER@$SSH_HOST "mkdir -p ~/services; rm -rf ~/services/${SERVICE}"
       - run:
           name: Copy build
           command: scp -r ~/service "${SSH_USER}@${SSH_HOST}:~/services/${SERVICE}"
       - run:
           name: Exec deploy
-          command: ssh $SSH_USER@SSH_HOST "cd ~/services/${SERVICE}; docker stack deploy --compose-file docker-compose.yml ${SERVICE}"
+          command: ssh $SSH_USER@$SSH_HOST "cd ~/services/${SERVICE}; docker stack deploy --compose-file docker-compose.yml ${SERVICE}"
           
 workflows:
   version: 2
