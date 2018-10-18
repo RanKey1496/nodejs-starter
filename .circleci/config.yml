@@ -63,9 +63,8 @@ jobs:
       - run:
           name: Exec deploy
           command: |
-          cd ~/services/$SERVICE
-          docker stack deploy --compose-file docker-compose.yml $SERVICE
-
+          ssh "$SSH_USER@SSH_HOST"  "cd ~/services/$SERVICE; docker stack deploy --compose-file docker-compose.yml $SERVICE"
+          
 workflows:
   version: 2
   build_and_deploy:
