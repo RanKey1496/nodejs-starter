@@ -1,5 +1,5 @@
 # nodejs-starter
-Nodejs project started using Onion Architecture
+Nodejs project starter using Onion Architecture
 
 ## Getting Started
 Async and non-blocking Nodejs 😎
