@@ -1,17 +1,17 @@
-# nodejs-started
+# nodejs-starter
 Nodejs project started using Onion Architecture
 
 ## Getting Started
 Async and non-blocking Nodejs 😎
 
-Fully based on onion architecture and good pratices.
+Fully based on onion architecture and good practices.
 
 This project is using:
 - TypeORM for connection to MySQL database
-- Inversifyjs as IOC (Inversion of Control)
+- Inversifyjs as IoC (Inversion of Control)
 - Express as API handler
 - Docker for deploy as container
-- CircleCI for automate pipeline from commit to deploy
+- CircleCI for automating pipeline from commit to deploy
 
 ### Prerequisites
 You will need a MySQL database at port 3307 or actually you can change this port at:
@@ -22,7 +22,7 @@ You will need a MySQL database at port 3307 or actually you can change this port
 ```
 
 ### Installing
-You should install dependencies for use this project
+You should install dependencies to use this project
 ```
 npm install
 ```
@@ -55,10 +55,9 @@ docker-compose up -d
 ```
 
 Using CircleCI:
-For circle workflows you sloud complete the last workflow step named as deploy (Everyone have a different deploy strategy)
+For circle workflows you should complete the last workflow step named as deploy (Everyone have a different deploy strategy)
 
 
 
 
 Regards
-Sorry for bad english btw
