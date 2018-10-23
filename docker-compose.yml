@@ -1,0 +1,6 @@
+version: '3'
+services:
+  started:
+    build: .
+    ports:
+      - 3500

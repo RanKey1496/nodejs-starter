@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  dependencies:
+  test:
     docker:
       - image: circleci/node:8.9.4
     working_directory: ~/service
@@ -16,23 +16,13 @@ jobs:
       - run:
           name: Install dependencies
           command: npm install
+      - run:
+          name: Run test
+          command: npm test
       - save_cache:
           paths:
             - node_modules
           key: dependencies-cache-{{ checksum "package.json" }}
-  test:
-    docker:
-      - image: circleci/node:8.9.4
-    working_directory: ~/service
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - dependencies-cache-{{ checksum "package.json" }}
-            - dependencies-cache
-      - run:
-          name: Run test
-          command: npm test
   build:
     docker:
       - image: circleci/node:8.9.4
@@ -52,30 +42,36 @@ jobs:
           paths:
             - dist
   deploy:
-    machine:
-      enabled: true
+    docker:
+      - image: circleci/node:8.9.4
+    working_directory: ~/service
     steps:
+      - checkout
+      - add_ssh_keys
+      - restore_cache:
+          keys: 
+            - dist-cache-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
       - run:
-          name: Deploy over SSH
-          command: echo "Deploying xd"
-
+          name: Known host
+          command: ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+      - run:
+          name: Remove existing files
+          command: ssh $SSH_USER@$SSH_HOST "mkdir -p ~/services; rm -rf ~/services/${SERVICE}"
+      - run:
+          name: Copy build
+          command: scp -r ~/service "${SSH_USER}@${SSH_HOST}:~/services/${SERVICE}"
+      - run:
+          name: Exec deploy
+          command: ssh $SSH_USER@$SSH_HOST "cd ~/services/${SERVICE}; docker stack deploy --compose-file docker-compose.yml ${SERVICE}"
+          
 workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - dependencies
-      - test:
-          requires:
-            - dependencies
+      - test
       - build:
           requires:
             - test
-          filters:
-            branches:
-              only: master
       - deploy:
           requires:
             - build
-          filters:
-            branches:
-              only: master
