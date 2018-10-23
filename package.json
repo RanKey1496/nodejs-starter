@@ -1,6 +1,6 @@
 {
   "name": "nodejs-started",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "scripts": {
     "start": "npm run serve",
     "build": "npm run build-ts && npm run tslint",
@@ -55,6 +55,6 @@
     "tslint": "^5.11.0",
     "typescript": "^3.1.1"
   },
-  "author": "RanKey",
+  "author": "rankey1496",
   "license": "ISC"
 }
